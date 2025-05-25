@@ -1,21 +1,5 @@
 {
-  "headers": [
-    {
-      "source": "/Login",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://dld-project-ordertracker.vercel.app"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
-    }
-  ]
+  "version": 2,
+  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "server.js" }]
 }
