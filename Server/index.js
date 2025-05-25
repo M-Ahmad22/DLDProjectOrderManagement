@@ -17,7 +17,7 @@ app.use(
   cors({
     // origin: process.env.FRONTEND_URL,
     origin: "https://dld-project-ordertracker.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
