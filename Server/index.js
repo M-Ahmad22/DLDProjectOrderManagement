@@ -8,7 +8,7 @@ dotenv.config();
 
 const ProjectOrder = require("./Models/ProjectOrder");
 const User = require("./Models/User");
-const WithdrawnAmount = require("./models/WithdrawnAmount");
+const WithdrawnAmount = require("./Models/WithdrawnAmount");
 
 const app = express();
 app.use(express.json());
