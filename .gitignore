@@ -1,18 +1,6 @@
-# Node modules
+# Ignore node_modules folders everywhere
 node_modules/
 
-# Logs
-logs/
-*.log
-npm-debug.log*
+# Ignore environment variable files
+**/.env
 
-# Environment variables
-.env
-.env.*
-
-# Build output (if any)
-dist/
-build/
-
-# Others
-.DS_Store
