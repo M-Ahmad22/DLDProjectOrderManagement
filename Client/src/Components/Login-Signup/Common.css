@@ -1,0 +1,145 @@
+/* Container to center form vertically and horizontally */
+.auth-container {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f4f6; /* light gray background */
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* The white form box */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  background-color: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Form title */
+.auth-form h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #1e40af; /* nice blue */
+}
+
+/* Input fields */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1.5px solid #d1d5db; /* light gray */
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+  border-color: #2563eb; /* blue on focus */
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+}
+
+/* Submit buttons */
+.auth-form button {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+  background-color: #1e40af;
+}
+
+/* Signup button style (green) */
+.auth-form button.signup-btn {
+  background-color: #16a34a; /* green */
+}
+
+.auth-form button.signup-btn:hover {
+  background-color: #15803d;
+}
+
+/* Login button style (blue) */
+.auth-form button.login-btn {
+  background-color: #2563eb; /* blue */
+}
+
+.auth-form button.login-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Message and error text */
+.auth-message {
+  color: #16a34a; /* green */
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.auth-error {
+  color: #dc2626; /* red */
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 480px) {
+  .auth-container {
+    /* min-height: 100vh; full height for better vertical centering */
+    padding: 12px;
+    width: 100%;
+  }
+
+  .auth-form {
+    /* height: auto; allow height to adjust based on content */
+    padding: 20px 16px;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .auth-form h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .auth-form input[type="text"],
+  .auth-form input[type="email"],
+  .auth-form input[type="password"] {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+
+  .auth-form button {
+    font-size: 16px;
+    padding: 10px 0;
+  }
+
+  .auth-message,
+  .auth-error {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+}

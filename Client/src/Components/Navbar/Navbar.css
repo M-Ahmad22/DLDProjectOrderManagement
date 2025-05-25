@@ -1,0 +1,74 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004080;
+  padding: 12px 24px;
+  color: white;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 90px;
+}
+.navbar-left .logo {
+  font-size: 24px;
+  margin-right: 12px;
+}
+.navbar-left h1 {
+  font-size: 24px;
+  margin: 0;
+  color: white;
+}
+.navbar-right .admin-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navbar-left a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-left a:hover {
+  color: #ffd700;
+}
+
+/* Modal overlay and content */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 2px;
+  right: 12px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.toggle-link {
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #004080;
+}
