@@ -13,7 +13,6 @@ const WithdrawnAmount = require("./models/WithdrawnAmount");
 const app = express();
 app.use(express.json());
 
-// CORS setup
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -23,20 +22,15 @@ app.use(
   })
 );
 
-// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Basic route
 app.get("/", (req, res) => {
   res.send("🚀 Backend API is running.");
 });
 
-// ========== ORDER ROUTES ==========
-
-// Submit a new project order
 app.post("/submit-order", async (req, res) => {
   try {
     // 🔐 Clean the payload based on type
@@ -55,7 +49,6 @@ app.post("/submit-order", async (req, res) => {
   }
 });
 
-// Get all project orders
 app.get("/all-orders", async (req, res) => {
   try {
     const orders = await ProjectOrder.find().sort({ createdAt: -1 });
@@ -65,7 +58,6 @@ app.get("/all-orders", async (req, res) => {
   }
 });
 
-// Update project order (status, payment)
 app.put("/update-order/:id", async (req, res) => {
   const { status, paidAmount, dueAmount } = req.body;
 
@@ -82,9 +74,6 @@ app.put("/update-order/:id", async (req, res) => {
   }
 });
 
-// ========== WITHDRAWN AMOUNT ROUTES ==========
-
-// Get total withdrawn amount
 app.get("/withdrawn-amount", async (req, res) => {
   try {
     const data = await WithdrawnAmount.findOne();
@@ -95,7 +84,6 @@ app.get("/withdrawn-amount", async (req, res) => {
   }
 });
 
-// Update withdrawn amount
 app.put("/update-withdrawn-amount", async (req, res) => {
   const { amount } = req.body;
   try {
@@ -113,9 +101,6 @@ app.put("/update-withdrawn-amount", async (req, res) => {
   }
 });
 
-// ========== AUTH ROUTES ==========
-
-// Signup
 app.post("/Signup", async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -134,7 +119,6 @@ app.post("/Signup", async (req, res) => {
   }
 });
 
-// Login
 app.post("/Login", async (req, res) => {
   const { email, password, role } = req.body;
 
@@ -159,55 +143,9 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-// ========== START SERVER ==========
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Backend server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
-
-// const bcrypt = require("bcrypt");
-
-// // Signup
-// app.post("/Signup", async (req, res) => {
-//   const { name, email, password, role } = req.body;
-//   try {
-//     const existing = await User.findOne({ email });
-//     if (existing) {
-//       return res.json({ success: false, message: "Email already exists" });
-//     }
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const newUser = new User({ name, email, password: hashedPassword, role });
-//     await newUser.save();
-//     res.json({ success: true, message: "Signup successful", user: newUser });
-//   } catch (err) {
-//     console.error("Signup Error:", err);
-//     res.status(500).json({ success: false, message: "Signup failed" });
-//   }
-// });
-
-// // Login
-// app.post("/Login", async (req, res) => {
-//   const { email, password, role } = req.body;
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.json({ success: false, message: "Invalid credentials" });
-//     }
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.json({ success: false, message: "Invalid credentials" });
-//     }
-//     if (user.role !== role) {
-//       return res.json({ success: false, message: "Unauthorized role" });
-//     }
-//     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-//       expiresIn: "2d",
-//     });
-//     res.json({ success: true, message: "Login successful", token, user });
-//   } catch (err) {
-//     console.error("Login Error:", err);
-//     res.status(500).json({ success: false, message: "Login failed" });
-//   }
-// });

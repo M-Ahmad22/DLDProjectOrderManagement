@@ -1,23 +1,18 @@
-// Components/ProtectedRoutes/ProtectedRoute.jsx
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({
-  isAuthenticated,
-  role,
-  requiredRole,
-  redirectPath = "/login",
-}) => {
-  if (!isAuthenticated) {
-    return <Navigate to={redirectPath} replace />;
-  }
+const ProtectedRoute = ({ allowedRoles = [] }) => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-  if (requiredRole && role !== requiredRole) {
-    // Optionally redirect unauthorized roles to home or an unauthorized page
-    return <Navigate to="/" replace />;
-  }
+  if (!token) return <Navigate to="/" replace />;
+  if (allowedRoles.length === 0) return <Outlet />;
 
-  return <Outlet />;
+  return allowedRoles.includes(role) ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/unauthorized" replace />
+  );
 };
 
 export default ProtectedRoute;

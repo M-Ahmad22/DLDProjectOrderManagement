@@ -5,16 +5,16 @@ import axios from "axios";
 import "./Admin.css";
 
 const Admin = ({ onLogout }) => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [orders, setOrders] = useState([]);
   const [withdrawn, setWithdrawn] = useState(0);
   const [newWithdrawn, setNewWithdrawn] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch orders and withdrawn amount from backend
     const fetchData = async () => {
       try {
-        const ordersRes = await axios.get("http://localhost:3000/all-orders");
+        const ordersRes = await axios.get(`${API_URL}/all-orders`);
         if (ordersRes.data.success) {
           const updatedOrders = ordersRes.data.orders.map((order) => ({
             ...order,
@@ -25,9 +25,7 @@ const Admin = ({ onLogout }) => {
           setOrders(updatedOrders);
         }
 
-        const withdrawnRes = await axios.get(
-          "http://localhost:3000/withdrawn-amount"
-        );
+        const withdrawnRes = await axios.get(`${API_URL}/withdrawn-amount`);
         if (withdrawnRes.data.success) {
           setWithdrawn(withdrawnRes.data.amount);
         }
@@ -42,7 +40,7 @@ const Admin = ({ onLogout }) => {
   const handleSignOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    if (onLogout) onLogout(); // Notify App about logout
+    if (onLogout) onLogout();
     navigate("/");
   };
   const handleStatusChange = (index, newStatus) => {
@@ -59,14 +57,11 @@ const Admin = ({ onLogout }) => {
 
   const saveOrder = async (order) => {
     try {
-      const res = await axios.put(
-        `http://localhost:3000/update-order/${order._id}`,
-        {
-          status: order.status,
-          paidAmount: order.paidAmount,
-          dueAmount: order.dueAmount,
-        }
-      );
+      const res = await axios.put(`${API_URL}/update-order/${order._id}`, {
+        status: order.status,
+        paidAmount: order.paidAmount,
+        dueAmount: order.dueAmount,
+      });
 
       if (res.data.success) {
         alert("Order updated successfully!");
@@ -82,12 +77,9 @@ const Admin = ({ onLogout }) => {
     try {
       const newTotal = withdrawn + newWithdrawn;
 
-      const res = await axios.put(
-        "http://localhost:3000/update-withdrawn-amount",
-        {
-          amount: newTotal,
-        }
-      );
+      const res = await axios.put(`${API_URL}/update-withdrawn-amount`, {
+        amount: newTotal,
+      });
 
       if (res.data.success) {
         setWithdrawn(newTotal);

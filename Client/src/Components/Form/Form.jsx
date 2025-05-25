@@ -13,6 +13,7 @@ const Form = () => {
     projectDetails: "",
     message: "",
   });
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,10 +23,8 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3000/submit-order",
-        formData
-      );
+      const res = await axios.post(`${API_URL}/submit-order`, formData);
+      window.location.reload();
       alert(res.data.message);
     } catch (err) {
       alert("Submission failed");

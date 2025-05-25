@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "./Common.css";
 
 const Login = ({ onLogin, isAuthenticated }) => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("admin"); // You can also make this selectable if needed
@@ -19,7 +21,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/Login", {
+      const res = await axios.post(`${API_URL}/Login`, {
         email,
         password,
         role,
@@ -28,8 +30,12 @@ const Login = ({ onLogin, isAuthenticated }) => {
       if (res.data.success && res.data.user.role === "admin") {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.user.role);
-        if (onLogin) onLogin();
-        // No need to navigate here; App will handle redirect based on auth state
+
+        navigate("/admin");
+        if (onLogin) {
+          onLogin();
+          // window.location.reload();
+        }
       } else {
         setError("Invalid credentials or unauthorized role.");
       }
@@ -37,7 +43,6 @@ const Login = ({ onLogin, isAuthenticated }) => {
       setError("Login failed");
     }
   };
-
   return (
     <div className="auth-container">
       <form onSubmit={handleLogin} className="auth-form">

@@ -12,32 +12,6 @@ import Home from "./Pages/Home";
 import AdminDashboard from "./Components/AdminDashborad/Admin";
 import ProtectedRoute from "./Components/ProtectedRoutes/ProtectedRoutes";
 
-const DebugInfo = ({ isAuthenticated, role }) => {
-  const location = useLocation();
-  return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: 10,
-        right: 10,
-        backgroundColor: "#eee",
-        padding: "8px 12px",
-        borderRadius: 4,
-        fontSize: 12,
-        boxShadow: "0 0 6px rgba(0,0,0,0.1)",
-        zIndex: 9999,
-      }}
-    >
-      <div>
-        <strong>Debug Info</strong>
-      </div>
-      <div>Current Path: {location.pathname}</div>
-      <div>isAuthenticated: {isAuthenticated ? "true" : "false"}</div>
-      <div>Role: {role || "none"}</div>
-    </div>
-  );
-};
-
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
@@ -61,19 +35,11 @@ const App = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  useEffect(() => {
-    console.log(
-      "[Auth State Changed] isAuthenticated:",
-      isAuthenticated,
-      "role:",
-      role
-    );
-  }, [isAuthenticated, role]);
-
   return (
     <Router>
       <Routes>
-        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
         <Route
           path="/login"
           element={
@@ -86,20 +52,7 @@ const App = () => {
             />
           }
         />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Home />} />
-
-        {/* Protected admin routes */}
-        <Route
-          element={
-            <ProtectedRoute
-              isAuthenticated={isAuthenticated}
-              role={role}
-              requiredRole="admin"
-              redirectPath="/login"
-            />
-          }
-        >
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route
             path="/admin"
             element={
@@ -114,12 +67,8 @@ const App = () => {
             }
           />
         </Route>
-
-        {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-
-      <DebugInfo isAuthenticated={isAuthenticated} role={role} />
     </Router>
   );
 };
