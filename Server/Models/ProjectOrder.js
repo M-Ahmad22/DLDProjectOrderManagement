@@ -26,6 +26,7 @@ const projectOrderSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "Pending",
+    enum: ["Pending", "Accepted", "In Progress", "Completed"],
   },
   paidAmount: {
     type: Number,
